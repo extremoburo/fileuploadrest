@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+
+    # Project apps
+    'fileUpload.imageUpload.apps.ImageuploadConfig'
 ]
 
 # REST_FRAMEWORK = {

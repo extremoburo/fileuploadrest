@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class ImageuploadConfig(AppConfig):
-    name = 'imageUpload'
+    name = 'fileUpload.imageUpload'
+    label = 'my.imageUpload'
