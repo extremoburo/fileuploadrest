@@ -43,17 +43,22 @@ def upload_image(request):
 def upload_image_with_model(request):
     """ Upload image and save meta data in database using a model """
     # queryset =
-    serializer = ImageSerializer(data=request.data)
+    data = request.data.copy()
+    data['name'] = request.FILES["image_uploaded"].name
+    serializer = ImageSerializer(data=data)
     if serializer.is_valid():
-        # serializer.image = request.FILES["image_uploaded"]
-        # serializer.image = "test"
-        serializer.name = request.FILES["image_uploaded"].name
         serializer.save()
         return Response({"response": "serializer is valid"})
     else:
-        return Response({"response": "serializer is INvalid"})
+        return Response({"response": serializer.errors})
 
     def perform_create(self, serializer):
         # file_obj = self.validated_data["image_uploaded"]
         # file_obj.save()
         serializer.save(image=self.request.FILES["image_uploaded"])
+
+
+'''         serializer.image = request.FILES["image_uploaded"]
+        # serializer.image = "test"
+        serializer.name = request.FILES["image_uploaded"].name  # is empty. WTF
+        serializer.save() '''
