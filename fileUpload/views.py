@@ -45,11 +45,17 @@ def upload_image_with_model(request):
     # queryset =
     data = request.data.copy()
     uploaded_image = request.FILES["image_uploaded"] 
+
     data["name"] = uploaded_image.name
     data["size"] = uploaded_image.size
+    # data["height"] = uploaded_image.image.height
+    # x = uploaded_image.image
+    # data["width"] = uploaded_image.image.width
+    # data["image_format"] = uploaded_image.image.format
     data["image"] = uploaded_image
+
     serializer = ImageSerializer(data=data)
-    if serializer.is_valid():
+    if serializer.is_valid() and (uploaded_image.content_type=="image/png"):
         serializer.save()
         return Response({"response": "serializer is valid"})
     else:
