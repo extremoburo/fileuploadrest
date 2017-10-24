@@ -44,7 +44,10 @@ def upload_image_with_model(request):
     """ Upload image and save meta data in database using a model """
     # queryset =
     data = request.data.copy()
-    data['name'] = request.FILES["image_uploaded"].name
+    uploaded_image = request.FILES["image_uploaded"] 
+    data["name"] = uploaded_image.name
+    data["size"] = uploaded_image.size
+    data["image"] = uploaded_image
     serializer = ImageSerializer(data=data)
     if serializer.is_valid():
         serializer.save()

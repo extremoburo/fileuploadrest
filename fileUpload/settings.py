@@ -27,6 +27,18 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+"""
+From: https://docs.djangoproject.com/en/1.11/ref/models/fields/
+In your settings file, you’ll need to define MEDIA_ROOT as the full path to a
+directory where you’d like Django to store uploaded files. (For performance,
+these files are not stored in the database.) Define MEDIA_URL as the base
+public URL of that directory.
+Make sure that this directory is writable by the Web server’s user account.
+"""
+# Path to store images
+MEDIA_ROOT = BASE_DIR
+# MEDIA_URL =
+
 
 # Application definition
 
