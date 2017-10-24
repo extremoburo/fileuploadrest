@@ -19,7 +19,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Image
-        fields = ("id", "name", "created_at", "size", "image")
+        fields = ("id", "name", "created_at", "image")
 
 #    def validate(self, data):
 #        return data

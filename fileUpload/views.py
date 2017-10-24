@@ -47,10 +47,10 @@ def upload_image_with_model(request):
     uploaded_image = request.FILES["image_uploaded"] 
 
     data["name"] = uploaded_image.name
-    data["size"] = uploaded_image.size
-    # data["height"] = uploaded_image.image.height
+    # data["size"] = uploaded_image.size
+    # data["height"] = uploaded_image.height
     # x = uploaded_image.image
-    # data["width"] = uploaded_image.image.width
+    # data["width"] = uploaded_image.width
     # data["image_format"] = uploaded_image.image.format
     data["image"] = uploaded_image
 

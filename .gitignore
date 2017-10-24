@@ -1,1 +1,3 @@
 *.pyc
+subdirectory/to-upload/my-images
+fileUpload/imageUpload/migrations
