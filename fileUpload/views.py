@@ -46,7 +46,7 @@ def upload_image(request):
 @api_view(["POST"])
 @parser_classes((FormParser, MultiPartParser))
 def upload_image_with_model(request):
-    """ Upload image and save meta data in database using a model """
+    """Upload image and save meta data in database using a model"""
     serializer = ImageSerializer(data={
         "name": request.FILES["image_to_upload"].name,
         "image": request.FILES["image_to_upload"]
@@ -67,7 +67,7 @@ def upload_image_with_model(request):
 @api_view(["POST"])
 @parser_classes((FormParser, MultiPartParser))
 def upload_image_to_minio(request):
-    """ Upload image, save meta data and save to minio """
+    """ Upload image, save it to disk THEN and save it to Minio """
     myRequest = request
     image = myRequest.FILES["image_to_upload"]
     # How to prevent the save locally?
@@ -101,4 +101,43 @@ def upload_image_to_minio(request):
             except ResponseError as err:
                 print(err)
 
+        return Response({"response": "serializer is valid"})
+
+
+@api_view(["POST"])
+@parser_classes((FormParser, MultiPartParser))
+def upload_image_to_minio_directly(request):
+    """
+    Upload image, and save it to Minio directly.
+    Unlike the previous view, this should not leave behind a file in the disk.
+    """
+    myRequest = request
+    image = myRequest.FILES["image_to_upload"]
+    # How to prevent the save locally?
+    # Save directly to minio, and keep info to fetch it from minio
+    minioClient = Minio(
+        'localhost:9000',
+        access_key="A2P6XIHNB1BFHCAOJOK9",
+        secret_key="44JvW89En4gwd6UpnAPYISjIW9JoNctNAcaxHPs+",
+        secure=False  # Not over SSL. Should probably be changed
+    )
+    serializer = ImageSerializer(data={
+        "name": image.name,
+        "image": image
+        }
+    )
+
+    if (
+        serializer.is_valid(raise_exception=True) and
+        (
+            image.content_type == "image/jpeg" or
+            image.content_type == "image/png"
+        )
+    ):
+        # serializer.save()
+        # Copying file from stream directly into a minio bucket
+        for chunk in image.chunks():
+            # AttributeError: 'bytes' object has no attribute 'read'
+            minioClient.put_object("anas", "NewPictureDirectlyFromStream", chunk, image.size)
+   
         return Response({"response": "serializer is valid"})
