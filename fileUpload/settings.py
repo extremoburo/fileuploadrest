@@ -37,8 +37,6 @@ Make sure that this directory is writable by the Web server’s user account.
 """
 # Path to store images
 MEDIA_ROOT = BASE_DIR
-# MEDIA_URL =
-
 
 # Application definition
 
@@ -51,8 +49,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
 
-    # Project apps
-    'fileUpload.imageUpload.apps.ImageuploadConfig'
+    # PROJECT APPS
+    'fileUpload.imageUpload.apps.ImageuploadConfig',
+
+    # PIP
+    # 'minio_storage',
 ]
 
 # REST_FRAMEWORK = {

@@ -5,10 +5,11 @@
 # PYTHON
 
 # PIP
-from rest_framework.decorators import api_view, parser_classes
-from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.decorators import api_view
+from rest_framework.decorators import parser_classes
+from rest_framework.parsers import FormParser
+from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
-# from requests import post
 
 # DJANGO
 
@@ -33,41 +34,22 @@ def upload_image(request):
     for chunk in image_uploaded.chunks():
         destination.write(chunk)
     destination.close()
-    # pythonDict = dict(queryDictReceived)
     return Response({'received request': "File saved"})
-# queryDictReceived = request._request  #.GET
 
 
 @api_view(["POST"])
 @parser_classes((FormParser, MultiPartParser))
 def upload_image_with_model(request):
     """ Upload image and save meta data in database using a model """
-    # queryset =
-    data = request.data.copy()
-    uploaded_image = request.FILES["image_uploaded"] 
+    serializer = ImageSerializer(data={
+        "name": request.FILES["image_to_upload"].name,
+        "image": request.FILES["image_to_upload"]
+        }
+    )
 
-    data["name"] = uploaded_image.name
-    # data["size"] = uploaded_image.size
-    # data["height"] = uploaded_image.height
-    # x = uploaded_image.image
-    # data["width"] = uploaded_image.width
-    # data["image_format"] = uploaded_image.image.format
-    data["image"] = uploaded_image
-
-    serializer = ImageSerializer(data=data)
-    if serializer.is_valid() and (uploaded_image.content_type=="image/png"):
+    if (
+        serializer.is_valid(raise_exception=True) and
+        request.FILES["image_to_upload"].content_type == "image/png"
+    ):
         serializer.save()
         return Response({"response": "serializer is valid"})
-    else:
-        return Response({"response": serializer.errors})
-
-    def perform_create(self, serializer):
-        # file_obj = self.validated_data["image_uploaded"]
-        # file_obj.save()
-        serializer.save(image=self.request.FILES["image_uploaded"])
-
-
-'''         serializer.image = request.FILES["image_uploaded"]
-        # serializer.image = "test"
-        serializer.name = request.FILES["image_uploaded"].name  # is empty. WTF
-        serializer.save() '''

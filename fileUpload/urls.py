@@ -20,5 +20,6 @@ from . import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^imageupload/$', views.upload_image, name="upload_image"),
-    url(r'^imageuploadwithmodel', views.upload_image_with_model, name="upload_image_with_model"),
+    url(r'^imageuploadwithmodel', views.upload_image_with_model,
+        name="upload_image_with_model"),
 ]
