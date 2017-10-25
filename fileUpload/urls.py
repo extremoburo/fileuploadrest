@@ -22,4 +22,6 @@ urlpatterns = [
     url(r'^imageupload/$', views.upload_image, name="upload_image"),
     url(r'^imageuploadwithmodel', views.upload_image_with_model,
         name="upload_image_with_model"),
+    url(r'^imageuploadtominio', views.upload_image_to_minio,
+        name="upload_image_to_minio"),
 ]

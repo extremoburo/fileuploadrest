@@ -36,7 +36,8 @@ public URL of that directory.
 Make sure that this directory is writable by the Web server’s user account.
 """
 # Path to store images
-MEDIA_ROOT = BASE_DIR
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Application definition
 

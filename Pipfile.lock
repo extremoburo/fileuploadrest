@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bb9fdae4c365b9c81a825a23c38bc84e67aef1cd8e995df0be74e116359402e2"
+            "sha256": "24b1e60af5778d42f84420a98d5963642678baa5aca3595c4fe38ccc12a2c8e3"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -29,6 +29,13 @@
         ]
     },
     "default": {
+        "certifi": {
+            "hashes": [
+                "sha256:54a07c09c586b0e4c619f02a5e94e36619da8e2b053e20f594348c0611803704",
+                "sha256:40523d2efb60523e113b44602298f0960e900388cf3bb6043f645cf57ea9e3f5"
+            ],
+            "version": "==2017.7.27.1"
+        },
         "django": {
             "hashes": [
                 "sha256:7ab6a9c798a5f9f359ee6da3677211f883fb02ef32cebe9b29751eb7a871febf",
@@ -56,6 +63,13 @@
                 "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"
             ],
             "version": "==0.6.1"
+        },
+        "minio": {
+            "hashes": [
+                "sha256:95385e649c354520aba40ebf154d66500758e9dc43490e8f4516f7ed4bec042d",
+                "sha256:abe768a428c0ce2a0fce046b4cd8272c3227aebd4fc35c2184c9509309d8d62c"
+            ],
+            "version": "==2.2.5"
         },
         "olefile": {
             "hashes": [
@@ -142,6 +156,13 @@
                 "sha256:f5c056e8f62d45ba8215e5cb8f50dfccb198b4b9fbea8500674f3443e4689589"
             ],
             "version": "==2017.2"
+        },
+        "urllib3": {
+            "hashes": [
+                "sha256:06330f386d6e4b195fbfc736b297f58c5a892e4440e54d294d7004e3a9bbea1b",
+                "sha256:cc44da8e1145637334317feebd728bd869a35285b93cbb4cca2577da7e62db4f"
+            ],
+            "version": "==1.22"
         }
     },
     "develop": {}
