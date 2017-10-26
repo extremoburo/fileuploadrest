@@ -12,6 +12,7 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from minio import Minio
 from minio.error import ResponseError
+from PIL import Image
 # from minio.error import BucketAlreadyOwnedByYou
 # from minio.error import BucketAlreadyExists
 
@@ -20,6 +21,7 @@ from django.conf import settings
 
 # PROJECT
 from .imageUpload.serializers import ImageSerializer
+from .imageUpload.serializers import ImageForMinioSerializer
 
 
 # *****************************************************************************
@@ -74,8 +76,8 @@ def upload_image_to_minio(request):
     # Save directly to minio, and keep info to fetch it from minio
     minioClient = Minio(
         'localhost:9000',
-        access_key="A2P6XIHNB1BFHCAOJOK9",
-        secret_key="44JvW89En4gwd6UpnAPYISjIW9JoNctNAcaxHPs+",
+        access_key=settings.MINIO_ACCESS_KEY,
+        secret_key=settings.MINIO_SECRET_KEY,
         secure=False  # Not over SSL. Should probably be changed
     )
     serializer = ImageSerializer(data={
@@ -84,13 +86,7 @@ def upload_image_to_minio(request):
         }
     )
 
-    if (
-        serializer.is_valid(raise_exception=True) and
-        (
-            image.content_type == "image/jpeg" or
-            image.content_type == "image/png"
-        )
-    ):
+    if serializer.is_valid(raise_exception=True) and is_image(image.content_type):
         serializer.save()
         # Copying file from disk into a minio bucket
         if(minioClient.bucket_exists("anas")):
@@ -113,32 +109,51 @@ def upload_image_to_minio_directly(request):
     """
     myRequest = request
     image = myRequest.FILES["image_to_upload"]
-    # How to prevent the save locally?
-    # Save directly to minio, and keep info to fetch it from minio
     minioClient = Minio(
         'localhost:9000',
-        access_key="R4GMUU075BP8JH9APPME",
-        secret_key="vVF+PCDIw712NlNqf//hPgCM396EOC86ABRhUHzL",
+        access_key=settings.MINIO_ACCESS_KEY,
+        secret_key=settings.MINIO_SECRET_KEY,
         secure=False  # Not over SSL. Should probably be changed
     )
-    serializer = ImageSerializer(data={
+    # Openning the image with Pillow gives back metadata
+    # WARNNING: read from this image sets the cursor to the end of it.
+    pillow_image = Image.open(image)
+
+
+    serializer = ImageForMinioSerializer(data={
         "name": image.name,
-        "image": image
+        "image": image,
+        "height": pillow_image.height,
+        "width": pillow_image.width,
+        "size": image.size,  # pillow_image.size will return (width, height)
+        "path_to_image": "NEEDSTOBESET"
         }
     )
 
-    if (
-        serializer.is_valid(raise_exception=True) and
-        (
-            image.content_type == "image/jpeg" or
-            image.content_type == "image/png"
-        )
-    ):
+    if serializer.is_valid(raise_exception=True) and is_image(image.content_type):
+        # Resetting the cursor to the beginning of the file
+        # django-storage-minio takes care of this automatically
+        image.file.seek(0)
+        etag = minioClient.put_object(
+                "anas",
+                image.name,
+                image.file,
+                image.size
+            )
         # serializer.save()
-        # Copying file from stream directly into a minio bucket
-        minioClient.put_object("anas", "NewPictureDirectlyFromStream", image.file, image.size)
-#        for chunk in image.chunks():
-            # AttributeError: 'bytes' object has no attribute 'read'
-#            minioClient.put_object("anas", "NewPictureDirectlyFromStream", chunk, image.size)
-   
+
         return Response({"response": "serializer is valid"})
+    else:
+        return Response({"Serializer invalid": serializer.errors})
+
+
+# *****************************************************************************
+# HELPERS
+# *****************************************************************************
+
+def is_image(content_type):
+    """Determines if the content_type provided refers to an image"""
+    if content_type == "image/jpeg" or content_type == "image/png":
+        return True
+    else:
+        return False
