@@ -27,3 +27,16 @@ class Image(models.Model):
 
     def __str__(self):
         return "%s" % self.name
+
+
+class ImageForMinio(models.Model):
+    name = models.CharField(max_length=1000)
+    created_at = models.DateTimeField(auto_now_add=True)
+    width = models.PositiveIntegerField()
+    height = models.PositiveIntegerField()
+    size = models.PositiveIntegerField()
+    image_format = models.CharField(max_length=100)
+    path_to_image = models.CharField(max_length=5000)
+
+    def __str__(self):
+        return "%s" % self.name
