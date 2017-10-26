@@ -1,4 +1,5 @@
 *.pyc
 subdirectory/to-upload/my-images
+media/subdirectory/to-upload/my-images
 fileUpload/imageUpload/migrations
 Pipfile.lock
