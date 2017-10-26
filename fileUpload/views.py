@@ -130,8 +130,6 @@ def upload_image_to_minio_directly(request):
                 image.file,
                 image.size
             )
-        # serializer.save()
-
         return Response({"response": "serializer is valid"})
     else:
         return Response({"Serializer invalid": serializer.errors})

@@ -12,6 +12,7 @@ djangorestframework = "*"
 pillow = "*"
 "flake8" = "*"
 minio = "*"
+"django-minio-storage" = "*"
 
 
 [requires]

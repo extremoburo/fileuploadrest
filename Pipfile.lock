@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "24b1e60af5778d42f84420a98d5963642678baa5aca3595c4fe38ccc12a2c8e3"
+            "sha256": "456fdbc472eab0da8af823b84432e2817613f9ef8c7ca9a145d3aaced552a756"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -42,6 +42,12 @@
                 "sha256:c3b42ca1efa1c0a129a9e863134cc3fe705c651dea3a04a7998019e522af0c60"
             ],
             "version": "==1.11.6"
+        },
+        "django-minio-storage": {
+            "hashes": [
+                "sha256:318893dc72c592043a5e573d11eaee910c12fd695fb7e7292a7b3034e70244e7"
+            ],
+            "version": "==0.1.0"
         },
         "djangorestframework": {
             "hashes": [

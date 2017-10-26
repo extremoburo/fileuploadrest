@@ -41,6 +41,39 @@ Make sure that this directory is writable by the Web server’s user account.
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+# ************************************************************************
+# http://django-minio-storage.readthedocs.io/en/latest/usage/
+# BEGIN: django-minio-storage's settings
+# ************************************************************************
+
+# The access URL for the service
+MINIO_STORAGE_ENDPOINT = "localhost:9000"
+# Credentials
+MINIO_STORAGE_ACCESS_KEY = "M2JUW6HH8SB1HQPK0ELV"
+MINIO_STORAGE_SECRET_KEY = "/jefKS+0+/jQLhyo7psX4Kptk7cVcw07uw+h9i4C"
+# Whether to use TLS or not (default: True)
+MINIO_STORAGE_USE_HTTPS = False
+# The bucket that will act as MEDIA folder
+MINIO_STORAGE_MEDIA_BUCKET_NAME = "mediabucket"
+# Whether to create the bucket if it does not already exist (default: False)
+MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
+# The bucket that will act as STATIC folder
+MINIO_STORAGE_STATIC_BUCKET_NAME = "staticbucket"
+# Whether to create the bucket if it does not already exist (default: False)
+MINIO_STORAGE_AUTO_CREATE_STATIC_BUCKET = True
+# The base URL for generating urls to objects from  MinioMediaStorage
+MINIO_STORAGE_MEDIA_URL = None
+# The base URL for generating URLs to objects from MinioStaticStorage
+MINIO_STORAGE_STATIC_URL = None
+# Determines if the media file URLs should be pre-signed (default: False)
+MINIO_STORAGE_MEDIA_USE_PRESIGNED = False
+# Determines if the static file URLs should be pre-signed (default: False)
+MINIO_STORAGE_STATIC_USE_PRESIGNED = False
+
+# ************************************************************************
+# END: django-minio-storage's settings
+# ************************************************************************
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -56,7 +89,7 @@ INSTALLED_APPS = [
     'fileUpload.imageUpload.apps.ImageuploadConfig',
 
     # PIP
-    # 'minio_storage',
+    'minio_storage',
 ]
 
 # REST_FRAMEWORK = {
@@ -95,10 +128,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'fileUpload.wsgi.application'
 
-# Minio Configuration
-
-MINIO_ACCESS_KEY = "M2JUW6HH8SB1HQPK0ELV"
-MINIO_SECRET_KEY = "/jefKS+0+/jQLhyo7psX4Kptk7cVcw07uw+h9i4C"
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
