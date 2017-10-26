@@ -117,8 +117,8 @@ def upload_image_to_minio_directly(request):
     # Save directly to minio, and keep info to fetch it from minio
     minioClient = Minio(
         'localhost:9000',
-        access_key="A2P6XIHNB1BFHCAOJOK9",
-        secret_key="44JvW89En4gwd6UpnAPYISjIW9JoNctNAcaxHPs+",
+        access_key="R4GMUU075BP8JH9APPME",
+        secret_key="vVF+PCDIw712NlNqf//hPgCM396EOC86ABRhUHzL",
         secure=False  # Not over SSL. Should probably be changed
     )
     serializer = ImageSerializer(data={
@@ -136,8 +136,9 @@ def upload_image_to_minio_directly(request):
     ):
         # serializer.save()
         # Copying file from stream directly into a minio bucket
-        for chunk in image.chunks():
+        minioClient.put_object("anas", "NewPictureDirectlyFromStream", image.file, image.size)
+#        for chunk in image.chunks():
             # AttributeError: 'bytes' object has no attribute 'read'
-            minioClient.put_object("anas", "NewPictureDirectlyFromStream", chunk, image.size)
+#            minioClient.put_object("anas", "NewPictureDirectlyFromStream", chunk, image.size)
    
         return Response({"response": "serializer is valid"})
