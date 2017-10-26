@@ -35,7 +35,9 @@ these files are not stored in the database.) Define MEDIA_URL as the base
 public URL of that directory.
 Make sure that this directory is writable by the Web server’s user account.
 """
+
 # Path to store images
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
@@ -93,6 +95,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'fileUpload.wsgi.application'
 
+# Minio Configuration
+
+MINIO_ACCESS_KEY = "M2JUW6HH8SB1HQPK0ELV"
+MINIO_SECRET_KEY = "/jefKS+0+/jQLhyo7psX4Kptk7cVcw07uw+h9i4C"
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
