@@ -26,4 +26,6 @@ urlpatterns = [
         name="upload_image_to_minio"),
     url(r'^imageuploadtominiodirectly', views.upload_image_to_minio_directly,
         name="upload_image_to_minio_directly"),
+    url(r'^imageuploadtominiopackage', views.upload_image_to_minio_package,
+        name="upload_image_to_minio_package"),
 ]
