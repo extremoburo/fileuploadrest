@@ -49,8 +49,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # The access URL for the service
 MINIO_STORAGE_ENDPOINT = "localhost:9000"
 # Credentials
-MINIO_STORAGE_ACCESS_KEY = "M2JUW6HH8SB1HQPK0ELV"
-MINIO_STORAGE_SECRET_KEY = "/jefKS+0+/jQLhyo7psX4Kptk7cVcw07uw+h9i4C"
+MINIO_STORAGE_ACCESS_KEY = "R0PNIYVHOJ1L6HJ4NXXG"
+MINIO_STORAGE_SECRET_KEY = "Fs1MtBj4j0e4PXMepLleh9rwySJzB9eavbaSPkcS"
 # Whether to use TLS or not (default: True)
 MINIO_STORAGE_USE_HTTPS = False
 # The bucket that will act as MEDIA folder
