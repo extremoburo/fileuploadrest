@@ -24,4 +24,5 @@ class ImageForMinioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ImageForMinio
-        fields = ("id", "name", "created_at", "path_to_image", "height", "width", "size")
+        fields = ("id", "name", "created_at", "path_to_image",
+                        "height", "width", "size", "image_format")
